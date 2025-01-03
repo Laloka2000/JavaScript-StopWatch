@@ -2,19 +2,9 @@
 <html>
 <head>
     <title>Simple Timer</title>
-    <style>
-        body{
-            background-color: black;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 60px;
-            color: white;
-        }
-        .startBtn , .stopBtn{
-            font-size: 30px;
-            padding: 20px;
-            border-radius: 15px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
 </head>
 <body>
     <div class="timer">
@@ -22,47 +12,6 @@
         <button class="startBtn">Start</button>
         <button class="stopBtn">Stop</button>
     </div>
-
-    <script>
-        const startBtn = document.querySelector('.startBtn');
-        const stopBtn = document.querySelector('.stopBtn');
-        const timeDisplay = document.querySelector('.time');
-        let timerInterval;
-        let startTime;
-        let isRunning = false;
-
-        startBtn.addEventListener('click', () => {
-            if (isRunning) {
-                // Stop the timer
-                clearInterval(timerInterval);
-                startBtn.textContent = 'Start';
-                stopBtn.disabled = false;
-            } else {
-                // Start the timer
-                startTime = Date.now() - (startTime || 0); // Resume from where it left off
-                timerInterval = setInterval(updateTime, 10);
-                startBtn.textContent = 'Stop';
-                stopBtn.disabled = true;
-            }
-            isRunning = !isRunning;
-        });
-
-        stopBtn.addEventListener('click', () => {
-            // Stop the timer
-            clearInterval(timerInterval);
-            startBtn.textContent = 'Start';
-            stopBtn.disabled = false;
-            isRunning = false;
-        });
-
-        function updateTime() {
-            const currentTime = Date.now() - startTime;
-            const minutes = Math.floor(currentTime / 60000);
-            const seconds = Math.floor((currentTime % 60000) / 1000);
-            const milliseconds = currentTime % 1000;
-            const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}:${String(milliseconds).padStart(3, '0')}`;
-            timeDisplay.textContent = formattedTime;
-        }
-    </script>
+    <script src="index.js"></script>
 </body>
 </html>
