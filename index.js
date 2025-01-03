@@ -1,38 +1,45 @@
-const startBtn = document.querySelector('startBtn');
-const stopBtn = document.querySelector('stopBtn')
-const displayTime = document.querySelector('.time');
+const startButton = document.querySelector(".startBtn");
+const stopButton = document.querySelector(".stopBtn");
+const timeDisplay = document.querySelector(".time");
 let timerInterval;
 let startTime;
 let isRunning = false;
 
 
-startBtn.addEventListener("click", () => {
-    if (isRunning){
-        clearInterval(timerInterval);
-        startBtn.textContent = "Start";
-        stopBtn.disabled = false;
-    } else {
-        startTime = Date.now() - (startTime || 0); 
-        timerInterval = setInterval(updateTime, 10);
-        startBtn.textContent = 'Stop';
-        stopBtn.disabled = true;
-    }
-    isRunning = !isRunning;
-});
 
-
-stopBtn.addEventListener("click", () => {
+startButton.addEventListener("click", () => {
+  if (isRunning) {
+    // Stop the timer
     clearInterval(timerInterval);
-    startBtn.textContent = "Start";
-    stopBtn.disabled = false;
-    isRunning = false;
+    startButton.textContent = "Start";
+    stopButton.disabled = false;
+  } else {
+    // Start the timer
+    startTime = Date.now() - (startTime || 0); // Resume from where it left off
+    timerInterval = setInterval(updateTime, 10);
+    startButton.textContent = "Stop";
+    stopButton.disabled = true;
+  }
+  isRunning = !isRunning;
 });
 
-function updateTime(){
-    const elapsedTime = Date.now() - startTime;
-    const time = new Date(elapsedTime);
-    const minutes = time.getMinutes().toString().padStart(2, '0');
-    const seconds = time.getSeconds().toString().padStart(2, '0');
-    const milliseconds = time.getMilliseconds().toString().padStart(3, '0');
-    displayTime.textContent = `${minutes}:${seconds}:${milliseconds}`;
+
+stopButton.addEventListener("click", () => {
+  // Stop the timer
+  clearInterval(timerInterval);
+  startButton.textContent = "Start";
+  stopButton.disabled = false;
+  isRunning = false;
+});
+
+
+function updateTime() {
+  const currentTime = Date.now() - startTime;
+  const minutes = Math.floor(currentTime / 60000);
+  const seconds = Math.floor((currentTime % 60000) / 1000);
+  const milliseconds = currentTime % 1000;
+  const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
+    seconds
+  ).padStart(2, "0")}:${String(milliseconds).padStart(3, "0")}`;
+  timeDisplay.textContent = formattedTime;
 }
